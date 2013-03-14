@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <script src="https://www.google.com/jsapi"
+        type="text/javascript"></script>
+		
+		<style>
+		.gsc-results-wrapper-nooverlay{
+			//display: none !important;
+		}
+		</style>
+    <script type="text/javascript">
+      google.load("search", "1", {"language" : "en"});
+
+      // Call this function when the page has been loaded
+      function initialize() {
+        var searchControl = new google.search.SearchControl();
+        
+		searchControl.setSearchCompleteCallback(this, kuma);
+		var siteSearch = new google.search.WebSearch();
+		siteSearch.setSiteRestriction("developer.mozilla.org");
+		searchControl.addSearcher(siteSearch);
+		searchControl.draw(document.getElementById("searchcontrol"));
+		searchControl.execute('Node');
+      }
+      google.setOnLoadCallback(initialize);
+	  
+	function kuma(sc, searcher){
+
+  // if we have local search results, put them on the map
+  if ( searcher.results && searcher.results.length > 0) {
+    for (var i = 0; i < searcher.results.length; i++) {
+      var result = searcher.results[i];
+	   logeventinfo(searcher.results[i]);
+	  }
+	}
+		window.addEventListener('click', function click(event){
+			event.preventDefault();
+			alert("ok");
+			//alert(event.target);
+		}, false);
+			//parent.kumapi('https://developer.mozilla.org/es/docs/Code_snippets/HTML_to_DOM');
+
+	}
+	
+ function logeventinfo (ev) {
+  for (var i in ev) {
+    if (typeof ev[i] === 'function' || i === i.toUpperCase()) {
+      continue;
+    }
+    dump(i + " " + ev[i] + "\n");
+  }
+  dump("=====================\n");
+}
+    </script>
+
+  </head>
+  <body>
+    <div id="searchcontrol"></div>
+  </body>
+
+</html>
